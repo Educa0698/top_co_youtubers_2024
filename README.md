@@ -245,25 +245,22 @@ FROM
 ### Create the SQL view 
 
 ```sql
-/*
-# 1. Create a view to store the transformed data
-# 2. Cast the extracted channel name as VARCHAR(100)
-# 3. Select the required columns from the top_uk_youtubers_2024 SQL table 
+/* 
+Step 3: Create a view to store the processed data
+1. Extract the channel name before the '@' character using SUBSTRING.
+2. Convert the extracted text to a format of up to 100 characters using CAST.
+3. Include the main metrics for each channel (subscribers, views, videos).
 */
 
--- 1.
-CREATE VIEW view_uk_youtubers_2024 AS
-
--- 2.
+CREATE VIEW view_co_youtubers_2024 AS
 SELECT
-    CAST(SUBSTRING(NOMBRE, 1, CHARINDEX('@', NOMBRE) -1) AS VARCHAR(100)) AS channel_name, -- 2. 
-    total_subscribers,
-    total_views,
-    total_videos
+    CAST(SUBSTRING(NAME, 1, CHARINDEX('@', NAME) - 1) AS VARCHAR(100)) AS channel_name, -- Channel name (text before the '@')
+    total_subscribers,                                                                  -- Total number of subscribers
+    total_views,                                                                        -- Total number of views
+    total_videos                                                                        -- Total number of videos
+FROM 
+    updated_youtube_data_co; -- Original table containing unprocessed data
 
--- 3.
-FROM
-    top_uk_youtubers_2024
 
 ```
 
