@@ -1,4 +1,4 @@
-# Data Portfolio: Excel to Power BI 
+# Data Portfolio: YouTube Channel Data Analysis: Insights for Strategic Marketing
 
 
 ![excel-to-powerbi-animated-diagram](assets/images/kaggle_to_powerbi.gif)
