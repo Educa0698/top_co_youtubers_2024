@@ -857,4 +857,5 @@ We'll have conversations with the marketing client to forecast what they also ex
 3. Kick off the campaigns and track each of their performances against the KPIs
 4. Review how the campaigns have gone, gather insights and optimize based on feedback from converted customers and each channel's audiences
 
-<iframe title="Dashboard youtubers colombia 2024" width="600" height="373.5" src="https://app.powerbi.com/view?r=eyJrIjoiMzdmNDhhYjAtNmFmOS00YzIwLTlhMzktZDI1ZTgyZmU2MDA4IiwidCI6IjZjYTM0YWUxLTQ2NmYtNDRiYy1hN2FhLTBhYzVhNzhjNjFiMSIsImMiOjR9" frameborder="0" allowFullScreen="true"></iframe>
+[Ver el dashboard interactivo aquí](assets/docs/dashboard.html)
+
