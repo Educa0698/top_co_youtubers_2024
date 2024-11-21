@@ -534,40 +534,35 @@ For this analysis, we'll prioritize analysing the metrics that are important in 
 
 ## Validation 
 
-### 1. Youtubers with the most subscribers 
+### 1. Scenario 1: Youtubers with the Most Subscribers
+ 
 
-#### Calculation breakdown
+#### Top 3 Channels and Key Metrics:
 
-Campaign idea = product placement 
-
-1. NoCopyrightSounds 
-- Average views per video = 6.92 million
-- Product cost = $5
-- Potential units sold per video = 6.92 million x 2% conversion rate = 138,400 units sold
-- Potential revenue per video = 138,400 x $5 = $692,000
-- Campaign cost (one-time fee) = $50,000
-- **Net profit = $692,000 - $50,000 = $642,000**
-
-b. DanTDM
-
-- Average views per video = 5.34 million
-- Product cost = $5
-- Potential units sold per video = 5.34 million x 2% conversion rate = 106,800 units sold
-- Potential revenue per video = 106,800 x $5 = $534,000
-- Campaign cost (one-time fee) = $50,000
-- **Net profit = $534,000 - $50,000 = $484,000**
-
-c. Dan Rhodes
-
-- Average views per video = 11.15 million
-- Product cost = $5
-- Potential units sold per video = 11.15 million x 2% conversion rate = 223,000 units sold
-- Potential revenue per video = 223,000 x $5 = $1,115,000
-- Campaign cost (one-time fee) = $50,000
-- **Net profit = $1,115,000 - $50,000 = $1,065,000**
-
-
-Best option from category: Dan Rhodes
+***KAROL G:**
+- Average views per video: 163,420,000
+- Potential units sold per video: 3,268,400
+- Potential revenue per video: 16,342,000,000
+- Net profit: 16,242,000,000
+  
+**J Balvin:**
+- Average views per video: 95,720,000
+- Potential units sold per video: 1,914,400
+- Potential revenue per video: 9,572,000,000
+- Net profit: 9,472,000,000
+  
+**toycantando:**
+- Average views per video: 21,410,000
+- Potential units sold per video: 428,200
+- Potential revenue per video: 2,141,000,000
+- Net profit: 2,041,000,000
+  
+**Analysis:**
+Channels with the most subscribers represent an excellent opportunity to maximize profitability.
+KAROL G is the most profitable option, with a high average view count per video and a net profit of 16,242 million.
+J Balvin is also highly competitive, achieving significant net profit of 9,472 million.
+toycantando, while having lower metrics, could be ideal for campaigns targeting children's audiences.
+Recommendation: This scenario is ideal for campaigns focused on broad exposure and significant conversions.
 
 
 #### SQL query 
@@ -577,18 +572,16 @@ Best option from category: Dan Rhodes
 
 # 1. Define variables 
 # 2. Create a CTE that rounds the average views per video 
-# 3. Select the column you need and create calculated columns from existing ones 
-# 4. Filter results by Youtube channels
+# 3. Select the columns you need and create calculated columns from existing ones 
+# 4. Filter results by the top 3 YouTube channels with the most subscribers 
 # 5. Sort results by net profits (from highest to lowest)
 
 */
 
-
 -- 1. 
-DECLARE @conversionRate FLOAT = 0.02;		-- The conversion rate @ 2%
-DECLARE @productCost FLOAT = 5.0;			-- The product cost @ $5
-DECLARE @campaignCost FLOAT = 50000.0;		-- The campaign cost @ $50,000	
-
+DECLARE @conversionRate FLOAT = 0.02;          -- The conversion rate @ 2%
+DECLARE @productCost FLOAT = 5000.0;          -- The product cost @ $5,000
+DECLARE @campaignCost FLOAT = 100000000.0;       -- The campaign cost @ $100,000,000
 
 -- 2.  
 WITH ChannelData AS (
@@ -598,7 +591,7 @@ WITH ChannelData AS (
         total_videos,
         ROUND((CAST(total_views AS FLOAT) / total_videos), -4) AS rounded_avg_views_per_video
     FROM 
-        youtube_db.dbo.view_uk_youtubers_2024
+        youtube_db.dbo.view_co_youtubers_2024
 )
 
 -- 3. 
@@ -611,15 +604,17 @@ SELECT
 FROM 
     ChannelData
 
-
 -- 4. 
 WHERE 
-    channel_name in ('NoCopyrightSounds', 'DanTDM', 'Dan Rhodes')    
-
+    channel_name IN (
+        SELECT TOP 3 channel_name
+        FROM youtube_db.dbo.view_co_youtubers_2024
+        ORDER BY total_subscribers DESC
+    )
 
 -- 5.  
 ORDER BY
-	net_profit DESC
+    net_profit DESC;
 
 ```
 
