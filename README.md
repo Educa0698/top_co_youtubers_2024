@@ -165,10 +165,11 @@ This is the stage where you have a scan of what's in the data, errors, inconcsis
 4. We have more data than we need, so some of these columns would need to be removed
 
 
----# Extraction and Update of YouTube Channel Data with Python
+---
+# Extraction and Update of YouTube Channel Data with Python
 
 ## Description
-In This step use the YouTube API to extract updated statistics for a list of channels obtained from a Kaggle file. The extracted information includes the channel name, total number of subscribers, views, and videos. Finally, the updated data is combined with the original file and exported to a new CSV file.
+In this step, we use the YouTube API to retrieve updated statistics for a list of channels sourced from a Kaggle dataset. The extracted data includes the channel name, total number of subscribers, views, and videos. Afterward, the updated information is merged with the original dataset and exported to a new CSV file.
 
 ---
 
