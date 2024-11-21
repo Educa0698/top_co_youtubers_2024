@@ -164,7 +164,291 @@ This is the stage where you have a scan of what's in the data, errors, inconcsis
 3. Some of the cells and header names are in a different language - we need to confirm if these columns are needed, and if so, we need to address them.
 4. We have more data than we need, so some of these columns would need to be removed
 
+# Extraction and Update of YouTube Channel Data with Python
 
+## Description
+This project uses the YouTube API to extract updated statistics for a list of channels obtained from a Kaggle file. The extracted information includes the channel name, total number of subscribers, views, and videos. Finally, the updated data is combined with the original file and exported to a new CSV file.
+
+---
+
+## Implemented Steps
+
+### 1. **Initial Configuration**
+Load the necessary libraries and set up the YouTube API with the provided key.
+
+```python
+import os
+import pandas as pd
+from googleapiclient.discovery import build
+
+API_KEY = "AIzaSyD-c_Jx8YDWL0L4YwmYHZ025wOCad2hgqo"
+API_VERSION = 'v3'
+
+# Initialize the YouTube API client
+youtube = build('youtube', API_VERSION, developerKey=API_KEY)
+```
+
+---
+
+### 2. **Function to Get Channel Statistics**
+Define a function that uses the API to retrieve statistics for a given channel ID.
+
+```python
+def get_channel_stats(youtube, channel_id):
+    request = youtube.channels().list(
+        part='snippet, statistics',
+        id=channel_id
+    )
+    response = request.execute()
+
+    if response['items']:
+        data = dict(
+            channel_name=response['items'][0]['snippet']['title'],
+            total_subscribers=response['items'][0]['statistics']['subscriberCount'],
+            total_views=response['items'][0]['statistics']['viewCount'],
+            total_videos=response['items'][0]['statistics']['videoCount'],
+        )
+        return data
+    else:
+        return None
+```
+
+---
+
+### 3. **Load Base File and Prepare IDs**
+Load the base file and extract unique channel IDs.
+
+```python
+# Read base file
+df = pd.read_excel("youtube_data_colombia.xlsx")
+df.head()
+
+# Extract unique channel IDs
+channel_ids = df['NAME'].str.split('@').str[-1].unique()
+```
+
+---
+
+### 4. **Extract Statistics for Each Channel**
+Iterate over the IDs and retrieve statistics for each channel, handling possible errors.
+
+```python
+channel_stats = []
+
+for channel_id in channel_ids:
+    try:
+        stats = get_channel_stats(youtube, channel_id)
+        if stats is not None:
+            channel_stats.append(stats)
+        else:
+            channel_stats.append({
+                'channel_name': 'Unknown',
+                'total_subscribers': 0,
+                'total_views': 0,
+                'total_videos': 0
+            })
+    except KeyError as e:
+        print(f"Error with ID {channel_id}: Key 'items' not found. {e}")
+        channel_stats.append({
+            'channel_name': 'Unknown',
+            'total_subscribers': 0,
+            'total_views': 0,
+            'total_videos': 0
+        })
+    except Exception as e:
+        print(f"Error with ID {channel_id}: {e}")
+        channel_stats.append({
+            'channel_name': 'Unknown',
+            'total_subscribers': 0,
+            'total_views': 0,
+            'total_videos': 0
+        })
+```
+
+---
+
+### 5. **Combine Data**
+Convert the list of statistics into a DataFrame and combine it with the original file.
+
+```python
+# Convert statistics to DataFrame
+stats_df = pd.DataFrame(channel_stats)
+
+# Reset indexes
+df.reset_index(drop=True, inplace=True)
+stats_df.reset_index(drop=True, inplace=True)
+
+# Combine original data with updated statistics
+combined_df = pd.concat([df, stats_df], axis=1)
+```
+
+---
+
+### 6. **Export Results**
+Save the combined DataFrame into a new CSV file.
+
+```python
+# Save to a CSV file
+combined_df.to_csv('updated_youtube_data_co.csv', index=False)
+
+# View first rows
+combined_df.head(10)
+```
+
+---
+
+## Output
+The file **`updated_youtube_data_co.csv`** contains:
+- Original data from the base file.
+- Updated information on:
+  - Channel name.
+  - Total subscribers.
+  - Total views.
+  - Total videos.
+
+---# Extraction and Update of YouTube Channel Data with Python
+
+## Description
+This project uses the YouTube API to extract updated statistics for a list of channels obtained from a Kaggle file. The extracted information includes the channel name, total number of subscribers, views, and videos. Finally, the updated data is combined with the original file and exported to a new CSV file.
+
+---
+
+## Implemented Steps
+
+### 1. **Initial Configuration**
+Load the necessary libraries and set up the YouTube API with the provided key.
+
+```python
+import os
+import pandas as pd
+from googleapiclient.discovery import build
+
+API_KEY = "AIzaSyD-c_Jx8YDWL0L4YwmYHZ025wOCad2hgqo"
+API_VERSION = 'v3'
+
+# Initialize the YouTube API client
+youtube = build('youtube', API_VERSION, developerKey=API_KEY)
+```
+
+---
+
+### 2. **Function to Get Channel Statistics**
+Define a function that uses the API to retrieve statistics for a given channel ID.
+
+```python
+def get_channel_stats(youtube, channel_id):
+    request = youtube.channels().list(
+        part='snippet, statistics',
+        id=channel_id
+    )
+    response = request.execute()
+
+    if response['items']:
+        data = dict(
+            channel_name=response['items'][0]['snippet']['title'],
+            total_subscribers=response['items'][0]['statistics']['subscriberCount'],
+            total_views=response['items'][0]['statistics']['viewCount'],
+            total_videos=response['items'][0]['statistics']['videoCount'],
+        )
+        return data
+    else:
+        return None
+```
+
+---
+
+### 3. **Load Base File and Prepare IDs**
+Load the base file and extract unique channel IDs.
+
+```python
+# Read base file
+df = pd.read_excel("youtube_data_colombia.xlsx")
+df.head()
+
+# Extract unique channel IDs
+channel_ids = df['NAME'].str.split('@').str[-1].unique()
+```
+
+---
+
+### 4. **Extract Statistics for Each Channel**
+Iterate over the IDs and retrieve statistics for each channel, handling possible errors.
+
+```python
+channel_stats = []
+
+for channel_id in channel_ids:
+    try:
+        stats = get_channel_stats(youtube, channel_id)
+        if stats is not None:
+            channel_stats.append(stats)
+        else:
+            channel_stats.append({
+                'channel_name': 'Unknown',
+                'total_subscribers': 0,
+                'total_views': 0,
+                'total_videos': 0
+            })
+    except KeyError as e:
+        print(f"Error with ID {channel_id}: Key 'items' not found. {e}")
+        channel_stats.append({
+            'channel_name': 'Unknown',
+            'total_subscribers': 0,
+            'total_views': 0,
+            'total_videos': 0
+        })
+    except Exception as e:
+        print(f"Error with ID {channel_id}: {e}")
+        channel_stats.append({
+            'channel_name': 'Unknown',
+            'total_subscribers': 0,
+            'total_views': 0,
+            'total_videos': 0
+        })
+```
+
+---
+
+### 5. **Combine Data**
+Convert the list of statistics into a DataFrame and combine it with the original file.
+
+```python
+# Convert statistics to DataFrame
+stats_df = pd.DataFrame(channel_stats)
+
+# Reset indexes
+df.reset_index(drop=True, inplace=True)
+stats_df.reset_index(drop=True, inplace=True)
+
+# Combine original data with updated statistics
+combined_df = pd.concat([df, stats_df], axis=1)
+```
+
+---
+
+### 6. **Export Results**
+Save the combined DataFrame into a new CSV file.
+
+```python
+# Save to a CSV file
+combined_df.to_csv('updated_youtube_data_co.csv', index=False)
+
+# View first rows
+combined_df.head(10)
+```
+
+---
+
+## Output
+The file **`updated_youtube_data_co.csv`** contains:
+- Original data from the base file.
+- Updated information on:
+  - Channel name.
+  - Total subscribers.
+  - Total views.
+  - Total videos.
+
+---
 
 
 
