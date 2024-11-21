@@ -559,10 +559,12 @@ For this analysis, we'll prioritize analysing the metrics that are important in 
   
 **Analysis:**
 Channels with the most subscribers represent an excellent opportunity to maximize profitability.
-KAROL G is the most profitable option, with a high average view count per video and a net profit of 16,242 million.
-J Balvin is also highly competitive, achieving significant net profit of 9,472 million.
-toycantando, while having lower metrics, could be ideal for campaigns targeting children's audiences.
-Recommendation: This scenario is ideal for campaigns focused on broad exposure and significant conversions.
+
+- KAROL G is the most profitable option, with a high average view count per video and a net profit of 16,242 million.
+- J Balvin is also highly competitive, achieving significant net profit of 9,472 million.
+- toycantando, while having lower metrics, could be ideal for campaigns targeting children's audiences.
+  
+**Recommendation: This scenario is ideal for campaigns focused on broad exposure and significant conversions.**
 
 
 #### SQL query 
