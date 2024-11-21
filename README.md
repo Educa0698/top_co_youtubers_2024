@@ -969,9 +969,8 @@ ORDER BY
 The marketing department should focus on strengthening campaigns with high engagement and profitability, optimizing content quality and segmentation to maximize return on investment.
 
 
----
-##References  
----
+## References  
+
 - **YouTube Video**:  
   *"Excel to Power BI Portfolio Project | Full End-to-End Data Project | #excel #sql #powerbi #python"* by *SDW Online*.  
   Available at: [https://www.youtube.com/watch?v=mm_sN-Elplg](https://www.youtube.com/watch?v=mm_sN-Elplg).  
