@@ -212,22 +212,33 @@ And here is a tabular representation of the expected schema for the clean data:
 ### Transform the data 
 
 
-
 ```sql
-/*
-# 1. Select the required columns
-# 2. Extract the channel name from the 'NOMBRE' column
+/* 
+Step 1: Data Cleaning and Transformation
+1. Select only the necessary columns.
+2. Extract YouTube channel names from the first column using text functions.
+3. Rename columns for better clarity and consistency.
 */
 
--- 1.
+/* Select the relevant columns from the table */
 SELECT
-    SUBSTRING(NOMBRE, 1, CHARINDEX('@', NOMBRE) -1) AS channel_name,  -- 2.
-    total_subscribers,
-    total_views,
-    total_videos
-
+    NAME,                -- Column containing the channel names in the format '@name'
+    total_subscribers,   -- Total number of channel subscribers
+    total_views,         -- Total number of channel views
+    total_videos         -- Total number of channel videos
 FROM
-    top_uk_youtubers_2024
+    updated_youtube_data_co; -- Original table containing unprocessed data
+
+/* 
+Step 2: Identify the position of the '@' character in the NAME column
+This is necessary to extract the channel name before the '@'.
+*/
+
+SELECT 
+    CHARINDEX('@', NAME) AS at_position, -- Position of the '@' character within the NAME text
+    NAME                                  -- Original channel name
+FROM 
+    updated_youtube_data_co;              -- Original data table
 ```
 
 
