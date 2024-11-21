@@ -362,7 +362,7 @@ HAVING
 
 - What does the dashboard look like?
 
-![GIF of Power BI Dashboard](assets/images/top_uk_youtubers_2024.gif)
+![GIF of Power BI Dashboard](assets/images/Dashboard_animation.gif)
 
 This shows the Top COLOMBIAN Youtubers in 2024 so far. 
 [Show the dashboard here👇👇](assets/docs/dashboard.html)
